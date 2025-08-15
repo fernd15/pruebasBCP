@@ -1,3 +1,3 @@
 FROM alpine:3.19
-LABEL maintainer="tu_email@example.com"
-CMD ["echo", "¡Hola desde Docker y ACR!"]
+LABEL maintainer="camposfer0506@gmail.com"
+CMD ["prueba en push a ecr - tablas"]
