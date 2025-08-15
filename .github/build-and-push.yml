@@ -1,0 +1,29 @@
+name: Promote Image to Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_tag:
+        description: "Tag de la imagen en ACR (lasted : a ejecutar)"
+        required: true
+      release_tag:
+        description: "Nuevo tag de release ( v1.0.0)"
+        required: true
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Import image in ACR without rebuild
+        run: |
+          az acr import \
+            --name ${{ secrets.ACR_NAME }} \
+            --source ${{ secrets.ACR_LOGIN_SERVER }}/pruebasbcp:${{ github.event.inputs.source_tag }} \
+            --image pruebasbcp:${{ github.event.inputs.release_tag }}
+
